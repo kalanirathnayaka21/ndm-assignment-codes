@@ -1,0 +1,13 @@
+//forward look up zone
+zone "IT23177628.lk" IN {
+    type master;
+    file "forward.IT23177628.lk";
+    allow-update { none; };
+};
+
+//reverse look up zone
+zone "76.17.23.in-addr.arpa" IN {
+    type master;
+    file "reverse.IT23177628.lk";
+    allow-update { none; };
+};
