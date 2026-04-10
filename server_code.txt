@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+int main() {
+    int server_socket, client_socket;
+    struct sockaddr_in server_addr, client_addr;
+    socklen_t addr_size;
+    char buffer[1024];
+
+    // 1. Create the socket
+    server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    
+    // 2. Configure the server details
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(8080);
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+
+    // 3. Bind the socket to the port
+    bind(server_socket, (struct sockaddr*)&server_addr, sizeof(server_addr));
+
+    // 4. Listen for incoming connections
+    listen(server_socket, 5);
+    printf("Server is listening on Port 8080...\n");
+
+    // 5. Accept the connection from the Fedora client
+    addr_size = sizeof(client_addr);
+    client_socket = accept(server_socket, (struct sockaddr*)&client_addr, &addr_size);
+    printf("Client connected successfully!\n");
+
+    // 6. Receive the message and print it
+    recv(client_socket, buffer, sizeof(buffer), 0);
+    printf("Message from Client: %s\n", buffer);
+
+    // 7. Clean up and close
+    close(client_socket);
+    close(server_socket);
+    return 0;
+}

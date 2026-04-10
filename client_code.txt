@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+int main() {
+    int client_socket;
+    struct sockaddr_in server_addr;
+    char message[] = "Hello Server! This is Kalani (IT23177628). The network is working!";
+
+    // 1. Create the socket
+    client_socket = socket(AF_INET, SOCK_STREAM, 0);
+
+    // 2. Configure the exact server details we want to connect to
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(8080);
+    server_addr.sin_addr.s_addr = inet_addr("23.17.76.2"); // Your CentOS Server IP
+
+    // 3. Connect to the server
+    printf("Connecting to Server at 23.17.76.2...\n");
+    if (connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) == 0) {
+        printf("Connected successfully!\n");
+    } else {
+        printf("Connection failed!\n");
+        return 1;
+    }
+
+    // 4. Send the custom message
+    send(client_socket, message, strlen(message), 0);
+    printf("Message sent successfully!\n");
+
+    // 5. Clean up and close
+    close(client_socket);
+    return 0;
+}
