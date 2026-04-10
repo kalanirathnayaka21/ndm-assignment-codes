@@ -1,0 +1,12 @@
+$TTL 86400
+@   IN  SOA     kalani7628.IT23177628.lk. root.IT23177628.lk. (
+        2011071001  ;Serial
+        3600        ;Refresh
+        1800        ;Retry
+        604800      ;Expire
+        86400       ;Minimum TTL
+)
+@   IN  NS      kalani7628.IT23177628.lk.
+@   IN  A       23.17.76.2
+kalani7628  IN  A   23.17.76.2
+client      IN  A   23.17.76.3
